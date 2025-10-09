@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineProps } from "vue";
 import type { User } from "@/types/models";
 
 const props = defineProps<{
