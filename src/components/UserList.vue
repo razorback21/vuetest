@@ -1,24 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from "vue";
-
-// types. We can move this into a separate file if needed. For now, keep it simple.
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  address: {
-    city: string;
-  };
-  company: {
-    name: string;
-  };
-}
-
-interface Post {
-  id: number;
-  title: string;
-  body: string;
-}
+import type { User, Post } from "@/types/models";
 
 // components
 import Posts from "./Posts.vue";

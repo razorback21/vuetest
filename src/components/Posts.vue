@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
-
-interface Post {
-  id: number;
-  title: string;
-  body: string;
-}
+import type { Post } from "@/types/models";
 
 // props
 const props = defineProps<{

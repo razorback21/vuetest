@@ -1,17 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  address: {
-    city: string;
-  };
-  company: {
-    name: string;
-  };
-}
+import type { User } from "@/types/models";
 
 const props = defineProps<{
   filteredUsers: User[];
