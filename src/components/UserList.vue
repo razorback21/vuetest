@@ -22,6 +22,7 @@ interface Post {
 
 // components
 import Posts from "./Posts.vue";
+import UserListTable from "./UserListTable.vue";
 
 // state
 const users = ref<User[]>([]);
@@ -67,29 +68,14 @@ const getUserPosts = (user: User) => {
     <div>
       <input v-model="searchQuery" type="text" placeholder="Search name..." />
     </div>
-    <table id="users-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>City</th>
-          <th>Company</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="user in filteredUsers"
-          :key="user.id"
-          @click="getUserPosts(user)"
-        >
-          <td>{{ user.name }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.address.city }}</td>
-          <td>{{ user.company.name }}</td>
-        </tr>
-      </tbody>
-    </table>
+
+    <UserListTable
+      :filteredUsers="filteredUsers"
+      :getUserPosts="getUserPosts"
+    />
+
     <br />
+
     <div v-if="selectedUser">
       <p id="user-name">{{ selectedUser.name }}'s Posts</p>
       <Posts :posts="posts" />
@@ -118,9 +104,6 @@ input {
   padding: 5px;
   width: 100%;
   box-sizing: border-box;
-}
-table#users-table tbody tr {
-  cursor: pointer;
 }
 #user-name {
   font-weight: bold;
