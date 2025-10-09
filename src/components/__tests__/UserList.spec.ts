@@ -69,7 +69,7 @@ describe('UserList.vue', () => {
     } as Response)
 
     const wrapper = mount(UserList)
-    
+
     // Wait for initial data to load
     await wrapper.vm.$nextTick()
     await vi.waitFor(() => {
