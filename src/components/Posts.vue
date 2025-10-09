@@ -25,27 +25,3 @@ const props = defineProps<{
     </table>
   </div>
 </template>
-<style scoped>
-table {
-  min-width: 600px;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-th {
-  font-weight: bold;
-  text-align: center;
-}
-
-input {
-  margin-bottom: 10px;
-  padding: 5px;
-  width: 100%;
-  box-sizing: border-box;
-}
-</style>
