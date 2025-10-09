@@ -5,6 +5,7 @@ import type { User, Post } from "@/types/models";
 // components
 import Posts from "./Posts.vue";
 import UserListTable from "./UserListTable.vue";
+import SearchFilter from "./SearchFilter.vue";
 
 // state
 const users = ref<User[]>([]);
@@ -45,9 +46,7 @@ const getUserPosts = async (user: User) => {
 
 <template>
   <div id="wrapper">
-    <div>
-      <input v-model="searchQuery" type="text" placeholder="Search name..." />
-    </div>
+    <SearchFilter v-model:searchQuery="searchQuery" />
     <UserListTable
       :filteredUsers="filteredUsers"
       :getUserPosts="getUserPosts"
