@@ -37,6 +37,7 @@ const getUserPosts = async (user: User) => {
     </div>
   </div>
 </template>
+
 <style>
 #wrapper {
   min-width: 800px;
