@@ -30,18 +30,16 @@ const filteredUsers = computed(() => {
 });
 
 // methods
-const getUserPosts = (user: User) => {
+const getUserPosts = async (user: User) => {
   selectedUser.value = user;
-  (async () => {
-    try {
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/posts?userId=" + user.id
-      );
-      posts.value = await response.json();
-    } catch (error) {
-      console.error(error);
-    }
-  })();
+  try {
+    const response = await fetch(
+      "https://jsonplaceholder.typicode.com/posts?userId=" + user.id
+    );
+    posts.value = await response.json();
+  } catch (error) {
+    console.error(error);
+  }
 };
 </script>
 
