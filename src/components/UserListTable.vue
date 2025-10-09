@@ -33,22 +33,6 @@ const props = defineProps<{
 </template>
 
 <style scoped>
-table {
-  min-width: 800px;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-th {
-  font-weight: bold;
-  text-align: center;
-}
-
 table tbody tr {
   cursor: pointer;
 }

@@ -64,7 +64,7 @@ const getUserPosts = (user: User) => {
     </div>
   </div>
 </template>
-<style scoped>
+<style>
 table {
   min-width: 800px;
   border-collapse: collapse;
