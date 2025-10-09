@@ -50,14 +50,11 @@ const getUserPosts = (user: User) => {
     <div>
       <input v-model="searchQuery" type="text" placeholder="Search name..." />
     </div>
-
     <UserListTable
       :filteredUsers="filteredUsers"
       :getUserPosts="getUserPosts"
     />
-
     <br />
-
     <div v-if="selectedUser">
       <p id="user-name">{{ selectedUser.name }}'s Posts</p>
       <Posts :posts="posts" />
