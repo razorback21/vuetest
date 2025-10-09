@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from "vue";
 
-// types
+// types. We can move this into a separate file if needed. For now, keep it simple.
 interface User {
   id: number;
   name: string;
@@ -29,6 +29,7 @@ const searchQuery = ref<string>("");
 const selectedUser = ref<User | null>(null);
 const posts = ref<Post[]>([]);
 
+// lifecycles
 onMounted(async () => {
   try {
     const response = await fetch("https://jsonplaceholder.typicode.com/users");
@@ -45,8 +46,8 @@ const filteredUsers = computed(() => {
   );
 });
 
-// method
-const getUseerPosts = (user: User) => {
+// methods
+const getUserPosts = (user: User) => {
   selectedUser.value = user;
   (async () => {
     try {
@@ -79,7 +80,7 @@ const getUseerPosts = (user: User) => {
         <tr
           v-for="user in filteredUsers"
           :key="user.id"
-          @click="getUseerPosts(user)"
+          @click="getUserPosts(user)"
         >
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
