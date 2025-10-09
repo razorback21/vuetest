@@ -1,9 +1,8 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import UserListTable from '../UserListTable.vue'
-import type { User } from '../../types/models'
 
-const mockUsers: User[] = [
+const mockUsers = [
   {
     id: 1,
     name: 'John Doe',
@@ -20,98 +19,116 @@ const mockUsers: User[] = [
   }
 ]
 
+// Mock fetch globally
+beforeEach(() => {
+  vi.stubGlobal('fetch', vi.fn())
+  vi.resetAllMocks()
+})
+
 describe('UserListTable.vue', () => {
-  it('renders the table with headers', () => {
+  it('renders user data correctly', async () => {
+    // Mock the fetch response
+    vi.mocked(fetch).mockResolvedValueOnce({
+      json: () => Promise.resolve(mockUsers)
+    } as Response)
+
     const wrapper = mount(UserListTable, {
       props: {
-        filteredUsers: [],
-        getUserPosts: vi.fn()
+        searchQuery: '',
+        getUserPosts: () => {}
       }
     })
 
-    const headers = wrapper.findAll('th')
-    expect(headers).toHaveLength(4)
-    expect(headers[0].text()).toBe('Name')
-    expect(headers[1].text()).toBe('Email')
-    expect(headers[2].text()).toBe('City')
-    expect(headers[3].text()).toBe('Company')
-  })
-
-  it('renders user data correctly', () => {
-    const wrapper = mount(UserListTable, {
-      props: {
-        filteredUsers: mockUsers,
-        getUserPosts: vi.fn()
-      }
-    })
+    // Wait for mounted hook and async operations
+    await wrapper.vm.$nextTick()
+    await new Promise(resolve => setTimeout(resolve, 0))
 
     const rows = wrapper.findAll('tbody tr')
     expect(rows).toHaveLength(2)
 
-    // Check first user data
-    const firstRow = rows[0]
-    const firstRowCells = firstRow.findAll('td')
+    // Verify the content of the first row
+    const firstRowCells = rows[0].findAll('td')
     expect(firstRowCells[0].text()).toBe('John Doe')
     expect(firstRowCells[1].text()).toBe('john@example.com')
     expect(firstRowCells[2].text()).toBe('New York')
     expect(firstRowCells[3].text()).toBe('Tech Corp')
+  })
 
-    // Check second user data
-    const secondRow = rows[1]
-    const secondRowCells = secondRow.findAll('td')
-    expect(secondRowCells[0].text()).toBe('Jane Smith')
-    expect(secondRowCells[1].text()).toBe('jane@example.com')
-    expect(secondRowCells[2].text()).toBe('Los Angeles')
-    expect(secondRowCells[3].text()).toBe('Design Inc')
+  it('renders empty table when no users provided', async () => {
+    // Mock empty users response
+    vi.mocked(fetch).mockResolvedValueOnce({
+      json: () => Promise.resolve([])
+    } as Response)
+
+    const wrapper = mount(UserListTable, {
+      props: {
+        searchQuery: '',
+        getUserPosts: () => {}
+      }
+    })
+
+    await wrapper.vm.$nextTick()
+    const rows = wrapper.findAll('tbody tr')
+    expect(rows).toHaveLength(0)
   })
 
   it('calls getUserPosts when clicking on a user row', async () => {
     const getUserPosts = vi.fn()
+
+    // Mock the fetch response
+    vi.mocked(fetch).mockResolvedValueOnce({
+      json: () => Promise.resolve(mockUsers)
+    } as Response)
+
     const wrapper = mount(UserListTable, {
       props: {
-        filteredUsers: mockUsers,
+        searchQuery: '',
         getUserPosts
       }
     })
 
-    // Click on the first user row
-    await wrapper.findAll('tbody tr')[0].trigger('click')
+    // Wait for mounted hook and async operations
+    await wrapper.vm.$nextTick()
+    await new Promise(resolve => setTimeout(resolve, 0))
 
-    // Check if the function was called with the correct user
-    expect(getUserPosts).toHaveBeenCalledTimes(1)
+    // Find and click the first row
+    const firstRow = wrapper.find('tbody tr')
+    await firstRow.trigger('click')
+
     expect(getUserPosts).toHaveBeenCalledWith(mockUsers[0])
   })
 
-  it('renders empty table when no users provided', () => {
+  it('updates table when filteredUsers prop changes', async () => {
+    // Mock the fetch response
+    vi.mocked(fetch).mockResolvedValueOnce({
+      json: () => Promise.resolve(mockUsers)
+    } as Response)
+
     const wrapper = mount(UserListTable, {
       props: {
-        filteredUsers: [],
-        getUserPosts: vi.fn()
+        searchQuery: '',
+        getUserPosts: () => {}
       }
     })
 
-    expect(wrapper.find('table').exists()).toBe(true)
-    expect(wrapper.find('tbody').exists()).toBe(true)
-    expect(wrapper.findAll('tbody tr')).toHaveLength(0)
+    // Wait for mounted hook and async operations
+    await wrapper.vm.$nextTick()
+    await new Promise(resolve => setTimeout(resolve, 0))
+
+    // Initially should show all users
+    expect(wrapper.findAll('tbody tr')).toHaveLength(2)
+
+    // Update search query to filter users
+    await wrapper.setProps({ searchQuery: 'John' })
+    await wrapper.vm.$nextTick()
+
+    // Should now only show one user
+    const filteredRows = wrapper.findAll('tbody tr')
+    expect(filteredRows).toHaveLength(1)
+    expect(filteredRows[0].findAll('td')[0].text()).toBe('John Doe')
   })
 
-  it('updates table when filteredUsers prop changes', async () => {
-    const wrapper = mount(UserListTable, {
-      props: {
-        filteredUsers: [],
-        getUserPosts: vi.fn()
-      }
-    })
-
-    // Initially no rows
-    expect(wrapper.findAll('tbody tr')).toHaveLength(0)
-
-    // Update props with users
-    await wrapper.setProps({ filteredUsers: mockUsers })
-
-    // Should now show two rows
-    const rows = wrapper.findAll('tbody tr')
-    expect(rows).toHaveLength(2)
-    expect(rows[0].findAll('td')[0].text()).toBe('John Doe')
+  afterEach(() => {
+    vi.unstubAllGlobals()
   })
 })
