@@ -45,7 +45,7 @@ const filteredUsers = computed(() => {
   );
 });
 
-// methoda
+// method
 const getUseerPosts = (user: User) => {
   selectedUser.value = user;
   (async () => {
