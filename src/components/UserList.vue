@@ -44,7 +44,7 @@ const getUserPosts = async (user: User) => {
 </script>
 
 <template>
-  <div>
+  <div id="wrapper">
     <div>
       <input v-model="searchQuery" type="text" placeholder="Search name..." />
     </div>
@@ -60,8 +60,11 @@ const getUserPosts = async (user: User) => {
   </div>
 </template>
 <style>
-table {
+#wrapper {
   min-width: 800px;
+}
+table {
+  width: 100%;
   border-collapse: collapse;
 }
 
