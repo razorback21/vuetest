@@ -37,9 +37,17 @@ describe('UserList.vue', () => {
     vi.resetAllMocks()
   })
 
-  it('renders the component', () => {
+  it('renders the component', async () => {
+    // Mock the fetch response for users since it's called on mount
+    vi.mocked(fetch).mockResolvedValueOnce({
+      json: () => Promise.resolve(mockUsers)
+    } as Response)
+
     const wrapper = mount(UserList)
-    expect(wrapper.find('#users-table').exists()).toBe(true)
+    await wrapper.vm.$nextTick()
+
+    // Search input should always be present
+    expect(wrapper.find('input[placeholder="Search name..."]').exists()).toBe(true)
   })
 
   it('fetches and displays users', async () => {
