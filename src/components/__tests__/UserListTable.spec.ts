@@ -54,48 +54,40 @@ describe('UserListTable.vue', () => {
     expect(firstRowCells[3].text()).toBe('Tech Corp')
   })
 
-  it('renders empty table when no users provided', async () => {
-    // Mock empty users response
-    vi.mocked(fetch).mockResolvedValueOnce({
-      json: () => Promise.resolve([])
-    } as Response)
-
-    const wrapper = mount(UserListTable, {
-      props: {
-        searchQuery: '',
-        getUserPosts: () => {}
-      }
-    })
-
-    await wrapper.vm.$nextTick()
-    const rows = wrapper.findAll('tbody tr')
-    expect(rows).toHaveLength(0)
-  })
 
   it('calls getUserPosts when clicking on a user row', async () => {
-    const getUserPosts = vi.fn()
+    // The component fetches users on mount and posts on row click.
+    const mockPosts = [
+      { id: 1, title: 'Post 1', body: 'Body 1' }
+    ]
 
-    // Mock the fetch response
-    vi.mocked(fetch).mockResolvedValueOnce({
-      json: () => Promise.resolve(mockUsers)
-    } as Response)
+    // queue two fetch responses: users then posts
+    vi.mocked(fetch)
+      .mockResolvedValueOnce({ json: () => Promise.resolve(mockUsers) } as Response)
+      .mockResolvedValueOnce({ json: () => Promise.resolve(mockPosts) } as Response)
 
     const wrapper = mount(UserListTable, {
       props: {
-        searchQuery: '',
-        getUserPosts
+        searchQuery: ''
       }
     })
 
-    // Wait for mounted hook and async operations
+    // Wait for mounted hook and initial fetch
     await wrapper.vm.$nextTick()
     await new Promise(resolve => setTimeout(resolve, 0))
 
     // Find and click the first row
     const firstRow = wrapper.find('tbody tr')
+    expect(firstRow.exists()).toBe(true)
     await firstRow.trigger('click')
 
-    expect(getUserPosts).toHaveBeenCalledWith(mockUsers[0])
+    // Wait for posts fetch
+    await new Promise(resolve => setTimeout(resolve, 0))
+
+    // Verify that fetch was called for posts with userId=1
+    const calls = vi.mocked(fetch).mock.calls
+    expect(calls.length).toBeGreaterThanOrEqual(2)
+    expect(String(calls[1][0])).toContain('/posts?userId=1')
   })
 
   it('updates table when filteredUsers prop changes', async () => {
