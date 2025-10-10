@@ -14,7 +14,10 @@ const userListTableRef = ref<InstanceType<typeof UserListTable>>();
 <template>
   <div id="wrapper">
     <SearchFilter ref="searchRef" />
-    <UserListTable ref="userListTableRef" :searchQuery="searchRef?.searchQuery" />
+    <UserListTable
+      ref="userListTableRef"
+      :searchQuery="searchRef?.searchQuery"
+    />
     <br />
     <div v-if="userListTableRef?.selectedUser">
       <p id="user-name">{{ userListTableRef.selectedUser.name }}'s Posts</p>

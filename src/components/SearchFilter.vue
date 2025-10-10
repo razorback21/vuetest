@@ -8,14 +8,11 @@ const searchQuery = ref<string>("");
 // This allows the parent component to access the searchQuery ref. A bit similar to React's useImperativeHandle.
 defineExpose({
   searchQuery,
-})
+});
 </script>
 
 <template>
   <div>
-    <input v-model="searchQuery"
-           type="text"
-           placeholder="Search name..."
-    >
+    <input v-model="searchQuery" type="text" placeholder="Search name..." />
   </div>
 </template>
