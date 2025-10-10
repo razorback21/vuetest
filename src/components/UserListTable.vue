@@ -20,7 +20,7 @@ onMounted(async () => {
 // computed
 const filteredUsers = computed(() => {
   return users.value.filter((user) =>
-    user.name.toLowerCase().includes(props.searchQuery.toLowerCase())
+    user.name.toLowerCase().includes(props.searchQuery?.toLowerCase() || "")
   );
 });
 
@@ -39,7 +39,7 @@ const getUserPosts = async (user: User) => {
 
 // props
 const props = defineProps<{
-  searchQuery: string;
+  searchQuery: string | undefined;
 }>();
 
 // expose
