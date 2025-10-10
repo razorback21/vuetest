@@ -119,8 +119,4 @@ describe('UserListTable.vue', () => {
     expect(filteredRows).toHaveLength(1)
     expect(filteredRows[0].findAll('td')[0].text()).toBe('John Doe')
   })
-
-  afterEach(() => {
-    vi.unstubAllGlobals()
-  })
 })
