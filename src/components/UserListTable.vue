@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { computed, ref, onMounted } from "vue";
-import type { User } from "@/types/models";
+import type {Post, User} from "@/types/models";
 
 // state
 const users = ref<User[]>([]);
+const selectedUser = ref<User | null>(null);
+const posts = ref<Post[]>([]);
 
 // lifecycles
 onMounted(async () => {
@@ -22,11 +24,30 @@ const filteredUsers = computed(() => {
   );
 });
 
+// methods
+const getUserPosts = async (user: User) => {
+  selectedUser.value = user;
+  try {
+    const response = await fetch(
+        "https://jsonplaceholder.typicode.com/posts?userId=" + user.id
+    );
+    posts.value = await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 // props
 const props = defineProps<{
   searchQuery: string;
-  getUserPosts: (user: User) => void;
 }>();
+
+// expose
+// This allows the parent component to access the selectedUser, posts ref. A bit similar to React's useImperativeHandle.
+defineExpose({
+  selectedUser,
+  posts
+})
 </script>
 
 <template>

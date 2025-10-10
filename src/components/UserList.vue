@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { User, Post } from "@/types/models";
 
 // components
 import Posts from "./Posts.vue";
@@ -8,32 +7,18 @@ import UserListTable from "./UserListTable.vue";
 import SearchFilter from "./SearchFilter.vue";
 
 // state
-const searchQuery = ref<string>("");
-const selectedUser = ref<User | null>(null);
-const posts = ref<Post[]>([]);
-
-// methods
-const getUserPosts = async (user: User) => {
-  selectedUser.value = user;
-  try {
-    const response = await fetch(
-      "https://jsonplaceholder.typicode.com/posts?userId=" + user.id
-    );
-    posts.value = await response.json();
-  } catch (error) {
-    console.error(error);
-  }
-};
+const searchRef = ref<typeof SearchFilter>();
+const userListTableRef = ref<typeof UserListTable>();
 </script>
 
 <template>
   <div id="wrapper">
-    <SearchFilter v-model:searchQuery="searchQuery" />
-    <UserListTable :searchQuery="searchQuery" :getUserPosts="getUserPosts" />
+    <SearchFilter ref="searchRef" />
+    <UserListTable ref="userListTableRef" :searchQuery="searchRef?.searchQuery" />
     <br />
-    <div v-if="selectedUser">
-      <p id="user-name">{{ selectedUser.name }}'s Posts</p>
-      <Posts :posts="posts" />
+    <div v-if="userListTableRef?.selectedUser">
+      <p id="user-name">{{ userListTableRef.selectedUser.name }}'s Posts</p>
+      <Posts :posts="userListTableRef?.posts" />
     </div>
   </div>
 </template>

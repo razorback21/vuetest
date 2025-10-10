@@ -1,22 +1,21 @@
 <script setup lang="ts">
-const props = defineProps<{
-  searchQuery: string;
-}>();
+import { ref } from "vue";
 
-const emit = defineEmits<{
-  "update:searchQuery": [value: string];
-}>();
+// state
+const searchQuery = ref<string>("");
+
+// expose.
+// This allows the parent component to access the searchQuery ref. A bit similar to React's useImperativeHandle.
+defineExpose({
+  searchQuery,
+})
 </script>
 
 <template>
   <div>
-    <input
-      :value="searchQuery"
-      @input="
-        emit('update:searchQuery', ($event.target as HTMLInputElement).value)
-      "
-      type="text"
-      placeholder="Search name..."
-    />
+    <input v-model="searchQuery"
+           type="text"
+           placeholder="Search name..."
+    >
   </div>
 </template>
