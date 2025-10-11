@@ -1,0 +1,50 @@
+<script setup lang="ts">
+// types
+type GetRowDataFn = (row: any) => any[];
+
+// props
+defineProps<{
+  headers: string[];
+  rows: any[];
+  rowKey: string;
+  getRowData: GetRowDataFn;
+  tableId?: string;
+  cursorPointer?: boolean;
+}>();
+
+// emits
+const emit = defineEmits<{
+  (e: "rowClick", row: any): void;
+}>();
+
+// methods
+function onRowClick(row: any) {
+  emit("rowClick", row);
+}
+</script>
+
+<template>
+  <table :id="tableId">
+    <thead>
+      <tr>
+        <th v-for="(header, i) in headers" :key="i">{{ header }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        :class="cursorPointer && 'cursor-pointer'"
+        v-for="row in rows"
+        :key="row[rowKey]"
+        @click="onRowClick(row)"
+      >
+        <td v-for="(cell, i) in getRowData(row)" :key="i">{{ cell }}</td>
+      </tr>
+    </tbody>
+  </table>
+</template>
+
+<style scoped>
+.cursor-pointer {
+  cursor: pointer;
+}
+</style>
