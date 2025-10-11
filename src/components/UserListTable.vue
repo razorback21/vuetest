@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, ref, onMounted } from "vue";
 import type { Post, User } from "@/types/models";
+import { fetchData } from "../utils/api";
+import MyTable from "./MyTable.vue";
 
 // state
 const users = ref<User[]>([]);
@@ -9,12 +11,7 @@ const posts = ref<Post[]>([]);
 
 // lifecycles
 onMounted(async () => {
-  try {
-    const response = await fetch("https://jsonplaceholder.typicode.com/users");
-    users.value = await response.json();
-  } catch (error) {
-    console.error(error);
-  }
+  fetchData("https://jsonplaceholder.typicode.com/users", users);
 });
 
 // computed
@@ -27,14 +24,10 @@ const filteredUsers = computed(() => {
 // methods
 const getUserPosts = async (user: User) => {
   selectedUser.value = user;
-  try {
-    const response = await fetch(
-      "https://jsonplaceholder.typicode.com/posts?userId=" + user.id
-    );
-    posts.value = await response.json();
-  } catch (error) {
-    console.error(error);
-  }
+  fetchData(
+    "https://jsonplaceholder.typicode.com/posts?userId=" + user.id,
+    posts
+  );
 };
 
 // props
@@ -54,32 +47,15 @@ defineExpose({
 </script>
 
 <template>
-  <table id="users-table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>City</th>
-        <th>Company</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        v-for="user in filteredUsers"
-        :key="user.id"
-        @click="getUserPosts(user)"
-      >
-        <td>{{ user.name }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.address.city }}</td>
-        <td>{{ user.company.name }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <MyTable
+    :tableId="'users-table'"
+    :headers="['Name', 'Email', 'City', 'Company']"
+    :rows="filteredUsers"
+    :rowKey="'id'"
+    :getRowData="
+      (user) => [user.name, user.email, user.address.city, user.company.name]
+    "
+    @rowClick="getUserPosts"
+    :cursorPointer="true"
+  />
 </template>
-
-<style scoped>
-table tbody tr {
-  cursor: pointer;
-}
-</style>

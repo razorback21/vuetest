@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Post } from "@/types/models";
+import MyTable from "./MyTable.vue";
 
 // props
 const props = defineProps<{
@@ -9,19 +10,12 @@ const props = defineProps<{
 
 <template>
   <div>
-    <table>
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Body</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="post in props.posts" :key="post.id">
-          <td>{{ post.title }}</td>
-          <td>{{ post.body }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <MyTable
+      :tableId="'posts-table'"
+      :headers="['Title', 'Body']"
+      :rows="props.posts"
+      :rowKey="'id'"
+      :getRowData="(post) => [post.title, post.body]"
+    />
   </div>
 </template>
