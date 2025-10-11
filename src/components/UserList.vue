@@ -7,8 +7,8 @@ import UserListTable from "./UserListTable.vue";
 import SearchFilter from "./SearchFilter.vue";
 
 // state
-const searchRef = ref<InstanceType<typeof SearchFilter>>();
-const userListTableRef = ref<InstanceType<typeof UserListTable>>();
+const searchRef = ref();
+const userListTableRef = ref();
 </script>
 
 <template>
