@@ -4,7 +4,7 @@ import type { Post, User } from "@/types/models";
 
 // state
 const users = ref<User[]>([]);
-const selectedUser = ref<User | null>(null);
+const selectedUser = ref<User>();
 const posts = ref<Post[]>([]);
 
 // lifecycles
@@ -20,7 +20,7 @@ onMounted(async () => {
 // computed
 const filteredUsers = computed(() => {
   return users.value.filter((user) =>
-    user.name.toLowerCase().includes(props.searchQuery?.toLowerCase() || "")
+    user.name.toLowerCase().includes(props.searchQuery.toLowerCase())
   );
 });
 
@@ -38,9 +38,12 @@ const getUserPosts = async (user: User) => {
 };
 
 // props
-const props = defineProps<{
-  searchQuery: string | undefined;
-}>();
+const props = defineProps({
+  searchQuery: {
+    type: String,
+    default: "",
+  },
+});
 
 // expose
 // This allows the parent component to access the selectedUser, posts ref. A bit similar to React's useImperativeHandle.
