@@ -43,19 +43,25 @@ const props = defineProps({
 defineExpose({
   selectedUser,
   posts,
+  filteredUsers,
 });
 </script>
 
 <template>
-  <MyTable
-    :tableId="'users-table'"
-    :headers="['Name', 'Email', 'City', 'Company']"
-    :rows="filteredUsers"
-    :rowKey="'id'"
-    :getRowData="
-      (user) => [user.name, user.email, user.address.city, user.company.name]
-    "
-    @rowClick="getUserPosts"
-    :cursorPointer="true"
-  />
+  <template v-if="filteredUsers.length > 0">
+    <MyTable
+      :tableId="'users-table'"
+      :headers="['Name', 'Email', 'City', 'Company']"
+      :rows="filteredUsers"
+      :rowKey="'id'"
+      :getRowData="
+        (user) => [user.name, user.email, user.address.city, user.company.name]
+      "
+      @rowClick="getUserPosts"
+      :cursorPointer="true"
+    />
+  </template>
+  <template v-else>
+    <p>No users found.</p>
+  </template>
 </template>
