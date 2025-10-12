@@ -68,6 +68,7 @@ defineExpose({
     <p>No users found.</p>
   </template>
 </template>
+
 <style scoped>
 table {
   width: 100%;
