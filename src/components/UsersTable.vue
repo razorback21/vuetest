@@ -2,7 +2,7 @@
 import { computed, ref, onMounted } from "vue";
 import type { Post, User } from "@/types/models";
 import MyTable from "./MyTable.vue";
-import useApi from "@/hooks/useApi.ts";
+import useApi from "@/composables/useApi";
 
 // hooks
 const { fetchData } = useApi();
