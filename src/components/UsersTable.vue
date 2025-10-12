@@ -6,13 +6,13 @@ import useApi from "@/composables/useApi";
 
 const { fetchData } = useApi();
 
+const users = ref<User[]>([]);
 onMounted(async () => {
   fetchData("https://jsonplaceholder.typicode.com/users", users);
 });
 
 
-// Users and filtering
-const users = ref<User[]>([]);
+// Users filtered by search query
 const filteredUsers = computed(() => {
   return users.value.filter((user) =>
     user.name.toLowerCase().includes(props.searchQuery.toLowerCase())
