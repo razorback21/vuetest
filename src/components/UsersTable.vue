@@ -4,27 +4,25 @@ import type { Post, User } from "@/types/models";
 import MyTable from "./MyTable.vue";
 import useApi from "@/composables/useApi";
 
-// hooks
 const { fetchData } = useApi();
 
-// state
-const users = ref<User[]>([]);
-const selectedUser = ref<User>();
-const posts = ref<Post[]>([]);
-
-// lifecycles
 onMounted(async () => {
   fetchData("https://jsonplaceholder.typicode.com/users", users);
 });
 
-// computed
+
+// Users and filtering
+const users = ref<User[]>([]);
 const filteredUsers = computed(() => {
   return users.value.filter((user) =>
     user.name.toLowerCase().includes(props.searchQuery.toLowerCase())
   );
 });
 
-// methods
+
+// Selected user and their posts
+const posts = ref<Post[]>([]);
+const selectedUser = ref<User>();
 const getUserPosts = async (user: User) => {
   selectedUser.value = user;
   fetchData(
