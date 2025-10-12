@@ -28,16 +28,9 @@ const usersTableRef = ref();
   </div>
 </template>
 
-<style>
+<style scoped>
 .mt-30 {
   margin-top: 30px;
-}
-
-input {
-  margin-bottom: 10px;
-  padding: 5px;
-  width: 100%;
-  box-sizing: border-box;
 }
 
 #user-name {

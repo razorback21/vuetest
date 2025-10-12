@@ -16,3 +16,10 @@ defineExpose({
     <input v-model="searchQuery" type="text" placeholder="Search name..." />
   </div>
 </template>
+<style scoped>
+input {
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 100%;
+}
+</style>
