@@ -1,8 +1,6 @@
 <script setup lang="ts">
-// types
+// props definition with types
 type GetRowDataFn = (row: any) => any[];
-
-// props
 defineProps<{
   headers: string[];
   rows: any[];
@@ -12,12 +10,10 @@ defineProps<{
   cursorPointer?: boolean;
 }>();
 
-// emits
+// row click event
 const emit = defineEmits<{
   (e: "rowClick", row: any): void;
 }>();
-
-// methods
 function onRowClick(row: any) {
   emit("rowClick", row);
 }
