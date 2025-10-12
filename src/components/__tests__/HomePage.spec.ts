@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { mount } from "@vue/test-utils";
 import HomePage from "../HomePage.vue";
-import Posts from "../Posts.vue";
+import PostsTable from "../PostsTable.vue";
 
 // Mock fetch API
 const mockUsers = [
@@ -121,7 +121,7 @@ describe("HomePage.vue", () => {
     await wrapper.vm.$nextTick();
 
     // Check if posts component is rendered
-    expect(wrapper.findComponent(Posts).exists()).toBe(true);
+    expect(wrapper.findComponent(PostsTable).exists()).toBe(true);
     expect(wrapper.find("#user-name").text()).toContain("John Doe");
   });
 
