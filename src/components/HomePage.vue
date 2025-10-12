@@ -6,7 +6,7 @@ import PostsTable from "./PostsTable.vue";
 import UsersTable from "./UsersTable.vue";
 import SearchFilter from "./SearchFilter.vue";
 
-// state
+// refs
 const searchRef = ref();
 const usersTableRef = ref();
 </script>
