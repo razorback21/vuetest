@@ -60,7 +60,6 @@ defineExpose({
       "
       :cursorPointer="true"
       @rowClick="getUserPosts"
-
     />
   </template>
   <template v-else>
