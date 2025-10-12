@@ -15,7 +15,7 @@ const usersTableRef = ref();
   <div id="wrapper">
     <!-- Search Filter -->
     <SearchFilter ref="searchRef" />
-    <!-- User List Table -->
+    <!-- User Table -->
     <UsersTable ref="usersTableRef" :searchQuery="searchRef?.searchQuery" />
 
     <div v-if="usersTableRef?.selectedUser" class="mt-30">
