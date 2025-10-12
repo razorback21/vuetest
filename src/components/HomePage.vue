@@ -3,12 +3,12 @@ import { ref } from "vue";
 
 // components
 import Posts from "./Posts.vue";
-import UserListTable from "./UserListTable.vue";
+import UsersTable from "./UsersTable.vue";
 import SearchFilter from "./SearchFilter.vue";
 
 // state
 const searchRef = ref();
-const userListTableRef = ref();
+const usersTableRef = ref();
 </script>
 
 <template>
@@ -16,16 +16,13 @@ const userListTableRef = ref();
     <!-- Search Filter -->
     <SearchFilter ref="searchRef" />
     <!-- User List Table -->
-    <UserListTable
-      ref="userListTableRef"
-      :searchQuery="searchRef?.searchQuery"
-    />
+    <UsersTable ref="usersTableRef" :searchQuery="searchRef?.searchQuery" />
 
-    <div v-if="userListTableRef?.selectedUser" class="mt-30">
-      <template v-if="userListTableRef?.filteredUsers.length > 0">
-        <p id="user-name">{{ userListTableRef.selectedUser.name }}'s Posts</p>
+    <div v-if="usersTableRef?.selectedUser" class="mt-30">
+      <template v-if="usersTableRef?.filteredUsers.length > 0">
+        <p id="user-name">{{ usersTableRef.selectedUser.name }}'s Posts</p>
         <!-- User Posts Table -->
-        <Posts :posts="userListTableRef?.posts" />
+        <Posts :posts="usersTableRef?.posts" />
       </template>
     </div>
   </div>
