@@ -22,7 +22,9 @@ export default typescriptEslint.config(
       },
     },
     rules: {
-      // your rules
+     'vue/attribute-hyphenation': 'off',
+     '@typescript-eslint/no-explicit-any': 'off',
+     'vue/v-on-event-hyphenation':'off'
     },
   },
   eslintConfigPrettier
