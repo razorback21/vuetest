@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { computed, ref, onMounted } from "vue";
 import type { Post, User } from "@/types/models";
-import { fetchData } from "../utils/api";
 import MyTable from "./MyTable.vue";
+import useApi from "@/hooks/useApi.ts";
+
+// hooks
+const { fetchData } = useApi();
 
 // state
 const users = ref<User[]>([]);
