@@ -24,7 +24,8 @@ export default typescriptEslint.config(
     rules: {
      'vue/attribute-hyphenation': 'off',
      '@typescript-eslint/no-explicit-any': 'off',
-     'vue/v-on-event-hyphenation':'off'
+     'vue/v-on-event-hyphenation':'off',
+     'vue/component-name-in-template-casing': ['error', 'PascalCase'],
     },
   },
   eslintConfigPrettier
