@@ -44,6 +44,20 @@ function onRowClick(row: any) {
 </template>
 
 <style scoped>
+table {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+th {
+  font-weight: bold;
+  text-align: center;
+}
 .cursor-pointer {
   cursor: pointer;
 }

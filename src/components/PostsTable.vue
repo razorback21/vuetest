@@ -19,3 +19,8 @@ const props = defineProps<{
     />
   </div>
 </template>
+<style scoped>
+table {
+  width: 100%;
+}
+</style>

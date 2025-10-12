@@ -29,26 +29,8 @@ const usersTableRef = ref();
 </template>
 
 <style>
-#wrapper {
-  min-width: 800px;
-}
 .mt-30 {
   margin-top: 30px;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-th {
-  font-weight: bold;
-  text-align: center;
 }
 
 input {
@@ -57,6 +39,7 @@ input {
   width: 100%;
   box-sizing: border-box;
 }
+
 #user-name {
   font-weight: bold;
   font-size: 1.2em;
