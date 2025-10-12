@@ -2,7 +2,7 @@
 import { ref } from "vue";
 
 // components
-import Posts from "./Posts.vue";
+import PostsTable from "./PostsTable.vue";
 import UsersTable from "./UsersTable.vue";
 import SearchFilter from "./SearchFilter.vue";
 
@@ -22,7 +22,7 @@ const usersTableRef = ref();
       <template v-if="usersTableRef?.filteredUsers.length > 0">
         <p id="user-name">{{ usersTableRef.selectedUser.name }}'s Posts</p>
         <!-- User Posts Table -->
-        <Posts :posts="usersTableRef?.posts" />
+        <PostsTable :posts="usersTableRef?.posts" />
       </template>
     </div>
   </div>
