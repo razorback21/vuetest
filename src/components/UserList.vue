@@ -13,15 +13,20 @@ const userListTableRef = ref();
 
 <template>
   <div id="wrapper">
+    <!-- Search Filter -->
     <SearchFilter ref="searchRef" />
+    <!-- User List Table -->
     <UserListTable
       ref="userListTableRef"
       :searchQuery="searchRef?.searchQuery"
     />
-    <br />
-    <div v-if="userListTableRef?.selectedUser">
-      <p id="user-name">{{ userListTableRef.selectedUser.name }}'s Posts</p>
-      <Posts :posts="userListTableRef?.posts" />
+
+    <div v-if="userListTableRef?.selectedUser" class="mt-30">
+      <template v-if="userListTableRef?.filteredUsers.length > 0">
+        <p id="user-name">{{ userListTableRef.selectedUser.name }}'s Posts</p>
+        <!-- User Posts Table -->
+        <Posts :posts="userListTableRef?.posts" />
+      </template>
     </div>
   </div>
 </template>
@@ -29,6 +34,9 @@ const userListTableRef = ref();
 <style>
 #wrapper {
   min-width: 800px;
+}
+.mt-30 {
+  margin-top: 30px;
 }
 table {
   width: 100%;
