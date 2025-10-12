@@ -60,8 +60,9 @@ defineExpose({
       :getRowData="
         (user) => [user.name, user.email, user.address.city, user.company.name]
       "
-      @rowClick="getUserPosts"
       :cursorPointer="true"
+      @rowClick="getUserPosts"
+
     />
   </template>
   <template v-else>

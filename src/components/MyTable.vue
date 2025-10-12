@@ -32,9 +32,9 @@ function onRowClick(row: any) {
     </thead>
     <tbody>
       <tr
-        :class="cursorPointer && 'cursor-pointer'"
         v-for="row in rows"
         :key="row[rowKey]"
+        :class="cursorPointer && 'cursor-pointer'"
         @click="onRowClick(row)"
       >
         <td v-for="(cell, i) in getRowData(row)" :key="i">{{ cell }}</td>
